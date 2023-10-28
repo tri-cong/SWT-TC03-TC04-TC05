@@ -4,12 +4,14 @@ import model.pages.RegisterPageSimple;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.annotations.Test;
 
 
 import java.util.Random;
 
 public class TC05 {
-    public static void main(String[] args) {
+    @Test
+    public void runTC05Test() {
         // Create an instance of the ChromeDriver
         WebDriver driver = driverFactory.getChromeDriver();
 

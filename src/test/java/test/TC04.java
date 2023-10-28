@@ -3,12 +3,14 @@ import driver.driverFactory;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.annotations.Test;
 
 import java.util.Set;
 
 public class TC04 {
 
-    public static void main(String[] args) {
+    @Test
+    public void runTC04Test() {
 
         // Create an instance of the ChromeDriver
         WebDriver driver = driverFactory.getChromeDriver();

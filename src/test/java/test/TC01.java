@@ -1,48 +1,47 @@
 package test;
-import driver.driverFactory;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+import driver.driverFactory;
+
 public class TC01 {
-    public static void main(String[] args) {
+    private WebDriver driver;
 
-
-        WebDriver driver = driverFactory.getChromeDriver();
-
-
+    @BeforeTest
+    public void setup() {
+        driver = driverFactory.getChromeDriver();
         driver.get("http://live.techpanda.org/");
+    }
 
-
+    @Test
+    public void runTC01Test() {
         String expectedTitle = "Home page";
         String actualTitle = driver.getTitle();
-        if (actualTitle.equals(expectedTitle)) {
-            System.out.println("Title verification successful: " + actualTitle);
-        } else {
-            System.out.println("Title verification failed: " + actualTitle);
-        }
-
+        Assert.assertEquals(actualTitle, expectedTitle, "Title verification failed");
 
         WebElement mobileMenu = driver.findElement(By.linkText("MOBILE"));
         mobileMenu.click();
-
 
         WebElement sortByDropdown = driver.findElement(By.cssSelector("select[title='Sort By']"));
         Select select = new Select(sortByDropdown);
         select.selectByVisibleText("Name");
 
-
         WebElement productList = driver.findElement(By.className("products-grid"));
-        if (isSorted(productList, "h2")) {
-            System.out.println("Products are sorted by name");
-        } else {
-            System.out.println("Products are not sorted by name");
-        }
+        Assert.assertTrue(isSorted(productList, "h2"), "Products are not sorted by name");
+    }
 
-
+    @AfterTest
+    public void teardown() {
         driver.quit();
     }
-    private static boolean isSorted(WebElement element, String tag) {
+
+    private boolean isSorted(WebElement element, String tag) {
         java.util.List<WebElement> elements = element.findElements(By.tagName(tag));
         String[] arr = new String[elements.size()];
         for (int i = 0; i < elements.size(); i++) {
